@@ -33,6 +33,7 @@ What you must do (the graded part):
   receives no credit.
 """
 import sys
+from langchain_ollama import ChatOllama
 
 # ---------------------------------------------------------------------------
 # 1. THE PROMPT — complete it. What you write here is the assignment.
@@ -42,10 +43,22 @@ Specification (SRS) of a Pac-Man game's core logic.
 
 Review the requirements below for defects. A defect is a violation of one of
 the ISO/IEC/IEEE 29148 quality characteristics:
-- TODO: list the characteristics and define, in one line each, what a
-        violation looks like (do not just name them).
-- TODO: tell the model what NOT to flag (style preferences, formatting, ...).
-- TODO: ask for cross-requirement checks (contradictions, duplicates).
+Defect definitions to test:
+- Unambiguous: Flag if a requirement uses vague, subjective language (e.g., "fast", "like", "close") or can be interpreted in more than one distinct way.
+- Complete: Flag if an actor, input trigger, boundary condition, or failure case is missing.
+- Consistent: Flag if a requirement directly contradicts or clashes with another requirement.
+- Verifiable / Testable: Flag if the requirement cannot be verified with a pass/fail condition of a definite value.
+- Singular / Atomic: Flag if a requirement combines multiple actions using words like "and/or" or "as well as".
+- Feasible: Flag if a requirement ask for features outside the core logic, such as UI graphics.
+- Traceable: Flag if a requirement is missing a code reference in the format "(Source: ClassName.methodName)".
+
+What NOT to flag:
+- Do NOT flag simple styling, casing, punctuation, formatting preferences, or grammar unless it creates ambiguity.
+- Do NOT flag standard domain terminology (such as "pellet", "ghost", "tick", "board cell").
+
+Cross-requirement checks:
+- Check for direct behavioral contradictions between different requirement IDs.
+- Check for duplicate or conflicting score calculations across requirement IDs.
 
 For each defect found, output exactly one line:
   <REQ-ID> | <characteristic violated> | <one-sentence explanation> | <suggested fix>
@@ -86,10 +99,9 @@ def review(path: str) -> None:
     #   from langchain_ollama import ChatOllama
     #   model = ChatOllama(model="llama3.2", temperature=0)  # temp 0 = reproducible
     #   print(model.invoke(prompt).content)
-    raise NotImplementedError(
-        "Complete the PROMPT above and the model call here, then re-run. "
-        "See the module docstring for what is graded."
-    )
+    model = ChatOllama(model="llama3.2", temperature=0)
+    print(model.invoke(prompt).content)
+    
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
